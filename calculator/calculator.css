@@ -1,0 +1,124 @@
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    display:flex;
+    flex-direction:column;
+    background-color: rgb(214, 214, 214);
+    padding: 0%;
+    margin: 0%;
+
+    --defaultcolorup:#fff;
+    --defaultcolordown:rgb(236, 240, 236);
+   --darkmodeup:rgb(38, 46, 41);
+   --darkmodedown:#121212;
+}
+
+header{
+    display:flex;
+}
+
+.calculator{
+    background-color:var(--defaultcolorup);
+    box-shadow:0 5px 10px 0 rgba(0,0,0,0.3);
+    overflow: hidden;
+    color:var(--darkmodedown);
+}
+
+header{
+    padding:.1em 1.5em;
+}
+
+.dotMenu{
+    font-size:2rem;
+    display:flex;
+    flex-wrap: wrap;
+    position: relative;
+    top:.1em;
+    left:5em;   
+    width:.3em;
+    height:27px;
+    border:none;
+    background-color:transparent;
+    padding:0;
+    transform: scale(.75);
+}
+
+.dotMenu > p{
+   width:100%;
+   height:33.3%;
+   margin:1% 0;
+}
+
+   .dot-dd{
+    display:none;
+    position:absolute;
+    top:4rem;
+    right:12em;
+    width:6em;
+    height:1em;
+    box-shadow:0 5px 10px 0 rgba(0,0,0,0.3);
+    background-color: #fff;
+     z-index:2;
+}
+
+.dot-dd > button{
+    width:100%;
+    height:100%;
+    background-color:transparent;
+    border:none;
+    outline:none;
+}
+
+.screen{
+    height:8em;
+    padding:2em 0 2em 15em;
+}
+.screen .displayChar{
+    font-size:2em;
+}
+.screen .displayAns{
+    font-size:1.4em;
+    padding-left:2em ;
+}
+
+.dd-btn{
+    width:15%;
+    height:3px;
+    background-color:rgb(212, 205, 205);
+    border-radius:10px;
+    margin-bottom:.5em;
+    margin-left:43%;
+    opacity:0.5;
+}
+
+.keyboard{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  background-color:var(--defaultcolordown);
+  padding:.2em .85em;
+}
+.keyboard > button{
+    font-size:22px;
+    font-weight:normal;
+    width:25%;
+    height:3.3em;
+    background-color:transparent;
+    border:none;
+    border-radius:100%;
+    transform: scale(.76);
+}
+.keyboard .operator{
+    font-weight:bold;
+    background-color:rgb(221, 221, 221);
+}
+.keyboard .calculate{
+    font-weight:bold;
+    background-color:rgb(255, 30, 0);
+    color:var(--defaultcolordown);
+}
+.keyboard .number{
+    font-weight: bold;
+}

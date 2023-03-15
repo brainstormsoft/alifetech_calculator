@@ -1,0 +1,21 @@
+/* tablet design */
+@media only screen and (min-width:23.13em ) {
+    .calculator{
+        position:absolute;
+        top:2.2em;
+        left:20%;
+        width:20.313em;
+        border-radius:20px;
+    }
+}
+
+/* laptop design */
+@media only screen and (min-width:44em) {
+    .calculator{
+        position:absolute;
+        top:2.2em;
+        left:35%;
+        width:20.313em;
+        border-radius:20px;
+    }
+}
