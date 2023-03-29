@@ -140,6 +140,76 @@ for (let i = 0; i < calculatorKeys.length; i++) {
       if (action === 'percent') {
         console.log('Percentage Key!')
       }
+
+      // I want to add a custom attribute here don't know if it'll suitable sha.
+      // If it's not I'll remove it and think of something else.
+
+      if (
+        action === 'plus' ||
+        action === 'minus' ||
+        action === 'multiply' ||
+        action === 'divide'
+      ) {
+        key.classList.add('is-pressed')
+        calculator.dataset.previousKeyType = 'operator'
+      }
+
+      Array.from(key.parentNode.children)
+        .forEach(k => k.classList.remove('is-pressed'))
+
+      let previousKeyType = calculator.dataset.previousKeyType
+
+      if (!action) {
+        if (displayedNum === '0'
+        ) {
+          displayWorking.textContent = keyContent
+        } else {
+          displayWorking.textContent = displayedNum + keyContent
+        }
+      }
+
+      if (
+        action === 'plus' ||
+        action === 'minus' ||
+        action === 'multiply' ||
+        action === 'divide'
+      ) {
+        calculator.dataset.firstValue = displayedNum
+        calculator.dataset.operator = action
+        displayWorking.textContent = displayedNum + keyContent
+      }
+
+      if (action === 'equal') {
+        let firstValue = calculator.dataset.firstValue
+        let operator = calculator.dataset.operator
+        let secondValue = displayedNum
+
+        if (previousKeyType !== 'operator') {
+          keys.removeEventListener()
+        }
+        displayAnswer.textContent = calculate(firstValue, operator, secondValue)
+      }
     }
   })
+}
+
+
+
+//Ermmm I'm going to write the calculate function here so that it'll be easier for you guys to find.
+// Also this function is only for simple calculations 
+
+
+const calculate = (firstNumber, operator, secondNumber) => {
+  let result = ''
+
+  if (operator === 'plus') {
+    result = parseFloat(firstNumber) + parseFloat(secondNumber);
+  } else if (operator === 'minus') {
+    result = parseFloat(firstNumber) - parseFloat(secondNumber);
+  } else if (operator === 'multiply') {
+    result = parseFloat(firstNumber) * parseFloat(secondNumber);
+  } else if (operator === 'divide') {
+    result = parseFloat(firstNumber) / parseFloat(secondNumber);
+  }
+  return result;
 }
