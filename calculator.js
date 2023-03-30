@@ -5,6 +5,7 @@ const functionalities = document.querySelectorAll(".functionality");
 const equalTo = document.querySelectorAll(".calculate");
 const Theme = document.querySelector(".theme");
 const dotMenu = document.querySelector(".dotMenu");
+const dotMenuChildren = document.querySelector(".dotMenu").children;
 const Keyboard = document.querySelectorAll(".keyboard");
 const themeModeDropdown = document.querySelectorAll(".dot-dd");
 const calculator = document.getElementById('system');
@@ -57,7 +58,7 @@ Theme.addEventListener("click", function () {
     reuseTheme(Keyboard, "#121212", "white");
     reuseTheme(numbers, "transparent", "white");
     reuseTheme(functionalities, "transparent", "white");
-    reuseTheme(dotMenu, "transparent", "white");
+    reuseTheme(dotMenuChildren, "transparent", "white");
 
     Theme.innerHTML = "Light mode";
 
@@ -67,7 +68,8 @@ Theme.addEventListener("click", function () {
     reuseTheme(Keyboard, "rgb(236, 240, 236)", "#121212");
     reuseTheme(numbers, "transparent", "#121212");
     reuseTheme(functionalities, "transparent", "#121212");
-    reuseTheme(dotMenu, "transparent", "#121212")
+    reuseTheme(dotMenu, "transparent", "#121212");
+    reuseTheme(dotMenuChildren, "transparent", "#121212");
 
     Theme.innerHTML = "Dark mode";
 
@@ -99,8 +101,32 @@ dotMenu.addEventListener("click", function () {
   }
 })
 
-//I'm no longer creating a separate file, I'll start working fro here.
+function paddingScreen(node,defaultNUm,constantValue,charLimit){
+    let nodeChar=node.textContent;
+    let nodeLength=nodeChar.length;
 
+   let paddingValues=[];
+
+   for(let i=defaultNUm; i > 0 ; i-=constantValue){
+      paddingValues.push(i);
+   }
+   
+   if(nodeLength < charLimit){
+      node.style.paddingLeft=`${paddingValues[nodeLength-1]}%`;
+   }else{
+     node.innerHTML="Character limit Error";
+     node.style.paddingLeft="50%";
+   }
+  }
+  //validating padding on the display screens...
+  paddingScreen(displayWorking,89,5,19);
+  paddingScreen(displayAnswer,90,3.5,25);
+  /*these functions above make the characters displayed on the screen pad properly */
+
+//this is the end of the features unit...
+
+//I'm no longer creating a separate file, I'll start working fro here.
+// light: okay  bro...
 for (let i = 0; i < calculatorKeys.length; i++) {
   let keys = calculatorKeys[i];
   keys.addEventListener('click', (e) => {
