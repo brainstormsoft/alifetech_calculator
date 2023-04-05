@@ -101,27 +101,27 @@ dotMenu.addEventListener("click", function () {
   }
 })
 
-function paddingScreen(node,defaultNUm,constantValue,charLimit){
-    let nodeChar=node.textContent;
-    let nodeLength=nodeChar.length;
+function paddingScreen(node, defaultNUm, constantValue, charLimit) {
+  let nodeChar = node.textContent;
+  let nodeLength = nodeChar.length;
 
-   let paddingValues=[];
+  let paddingValues = [];
 
-   for(let i=defaultNUm; i > 0 ; i-=constantValue){
-      paddingValues.push(i);
-   }
-   
-   if(nodeLength < charLimit){
-      node.style.paddingLeft=`${paddingValues[nodeLength-1]}%`;
-   }else{
-     node.innerHTML="Character limit Error";
-     node.style.paddingLeft="50%";
-   }
+  for (let i = defaultNUm; i > 0; i -= constantValue) {
+    paddingValues.push(i);
   }
-  //validating padding on the display screens...
-  paddingScreen(displayWorking,89,5,19);
-  paddingScreen(displayAnswer,90,3.5,25);
-  /*these functions above make the characters displayed on the screen pad properly */
+
+  if (nodeLength < charLimit) {
+    node.style.paddingLeft = `${paddingValues[nodeLength - 1]}%`;
+  } else {
+    node.innerHTML = "Character limit Error";
+    node.style.paddingLeft = "50%";
+  }
+}
+//validating padding on the display screens...
+//paddingScreen(displayWorking, 89, 5, 19);
+//paddingScreen(displayAnswer, 90, 3.5, 25);
+/*these functions above make the characters displayed on the screen pad properly */
 
 //this is the end of the features unit...
 
@@ -166,6 +166,92 @@ for (let i = 0; i < calculatorKeys.length; i++) {
       if (action === 'percent') {
         console.log('Percentage Key!')
       }
+
+      // I want to add a custom attribute here don't know if it'll suitable sha.
+      // If it's not I'll remove it and think of something else.
+
+      if (
+        action === 'plus' ||
+        action === 'minus' ||
+        action === 'multiply' ||
+        action === 'divide'
+      ) {
+        key.classList.add('is-pressed')
+        calculator.dataset.previousKeyType = 'operator'
+      }
+      if (action === 'percent') {
+        key.classList.add('is-pressed')
+        calculator.dataset.previousKeyType = 'percent'
+      }
+
+      Array.from(key.parentNode.children)
+        .forEach(k => k.classList.remove('is-pressed'))
+
+      let previousKeyType = calculator.dataset.previousKeyType
+
+      if (!action) {
+        if (displayedNum === '0'
+        ) {
+          displayWorking.textContent = keyContent
+        } else {
+          displayWorking.textContent = displayedNum + keyContent
+        }
+      }
+
+      if (
+        action === 'plus' ||
+        action === 'minus' ||
+        action === 'multiply' ||
+        action === 'divide' ||
+        action === 'percent'
+      ) {
+        calculator.dataset.firstValue = displayedNum
+        calculator.dataset.operator = action
+        displayWorking.textContent = displayedNum + keyContent
+      }
+
+      if (action === 'equal') {
+        let firstValue = calculator.dataset.firstValue
+        let operator = calculator.dataset.operator
+        let secondValue = displayedNum
+
+        if (previousKeyType !== 'operator') {
+          keys.removeEventListener()
+        }
+        displayAnswer.textContent = calculate(firstValue, operator, secondValue)
+
+      }
+
+      if (action === 'clear') {
+        calculator.dataset.firstValue = '';
+        calculator.dataset.operator = '';
+        calculator.dataset.secondValue = '';
+        calculator.dataset.previousKeyType = '';
+        displayWorking.textContent = 0;
+        displayAnswer.textContent = 0;
+        calculator.dataset.previousKeyType = 'clear'
+      }
     }
   })
+}
+
+
+
+//Ermmm I'm going to write the calculate function here so that it'll be easier for you guys to find.
+// Also this function is only for simple calculations 
+
+
+const calculate = (firstNumber, operator, secondNumber) => {
+  let result = ''
+
+  if (operator === 'plus') {
+    result = parseFloat(firstNumber) + parseFloat(secondNumber);
+  } else if (operator === 'minus') {
+    result = parseFloat(firstNumber) - parseFloat(secondNumber);
+  } else if (operator === 'multiply') {
+    result = parseFloat(firstNumber) * parseFloat(secondNumber);
+  } else if (operator === 'divide') {
+    result = parseFloat(firstNumber) / parseFloat(secondNumber);
+  }
+  return result;
 }
