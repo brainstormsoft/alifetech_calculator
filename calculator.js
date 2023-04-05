@@ -101,27 +101,27 @@ dotMenu.addEventListener("click", function () {
   }
 })
 
-function paddingScreen(node,defaultNUm,constantValue,charLimit){
-    let nodeChar=node.textContent;
-    let nodeLength=nodeChar.length;
+function paddingScreen(node, defaultNUm, constantValue, charLimit) {
+  let nodeChar = node.textContent;
+  let nodeLength = nodeChar.length;
 
-   let paddingValues=[];
+  let paddingValues = [];
 
-   for(let i=defaultNUm; i > 0 ; i-=constantValue){
-      paddingValues.push(i);
-   }
-   
-   if(nodeLength < charLimit){
-      node.style.paddingLeft=`${paddingValues[nodeLength-1]}%`;
-   }else{
-     node.innerHTML="Character limit Error";
-     node.style.paddingLeft="50%";
-   }
+  for (let i = defaultNUm; i > 0; i -= constantValue) {
+    paddingValues.push(i);
   }
-  //validating padding on the display screens...
-  paddingScreen(displayWorking,89,5,19);
-  paddingScreen(displayAnswer,90,3.5,25);
-  /*these functions above make the characters displayed on the screen pad properly */
+
+  if (nodeLength < charLimit) {
+    node.style.paddingLeft = `${paddingValues[nodeLength - 1]}%`;
+  } else {
+    node.innerHTML = "Character limit Error";
+    node.style.paddingLeft = "50%";
+  }
+}
+//validating padding on the display screens...
+//paddingScreen(displayWorking, 89, 5, 19);
+//paddingScreen(displayAnswer, 90, 3.5, 25);
+/*these functions above make the characters displayed on the screen pad properly */
 
 //this is the end of the features unit...
 
@@ -179,6 +179,10 @@ for (let i = 0; i < calculatorKeys.length; i++) {
         key.classList.add('is-pressed')
         calculator.dataset.previousKeyType = 'operator'
       }
+      if (action === 'percent') {
+        key.classList.add('is-pressed')
+        calculator.dataset.previousKeyType = 'percent'
+      }
 
       Array.from(key.parentNode.children)
         .forEach(k => k.classList.remove('is-pressed'))
@@ -198,7 +202,8 @@ for (let i = 0; i < calculatorKeys.length; i++) {
         action === 'plus' ||
         action === 'minus' ||
         action === 'multiply' ||
-        action === 'divide'
+        action === 'divide' ||
+        action === 'percent'
       ) {
         calculator.dataset.firstValue = displayedNum
         calculator.dataset.operator = action
@@ -214,6 +219,17 @@ for (let i = 0; i < calculatorKeys.length; i++) {
           keys.removeEventListener()
         }
         displayAnswer.textContent = calculate(firstValue, operator, secondValue)
+
+      }
+
+      if (action === 'clear') {
+        calculator.dataset.firstValue = '';
+        calculator.dataset.operator = '';
+        calculator.dataset.secondValue = '';
+        calculator.dataset.previousKeyType = '';
+        displayWorking.textContent = 0;
+        displayAnswer.textContent = 0;
+        calculator.dataset.previousKeyType = 'clear'
       }
     }
   })
